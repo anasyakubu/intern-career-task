@@ -1,0 +1,203 @@
+# RESTful API with Authentication and Authorization Using JWT in Node.js
+
+## Introduction
+
+This project is a RESTful API built using Node.js and Express to perform CRUD (Create, Read, Update, Delete) operations on a sample dataset. The API is enhanced with authentication and authorization using JSON Web Tokens (JWT) for secure access control.
+
+## Project Setup and Dependencies
+
+### Prerequisites
+
+- Node.js
+- npm or yarn
+- MongoDB
+
+### Installation
+
+1. Clone the repository:
+   git clone https://github.com/yourusername/rest-api-example.git
+   cd intern-career
+
+2. Install the dependencies:
+   npm install
+
+3. Create a `.env` file in the root directory and add the following:env
+   JWT_SECRET=your_jwt_secret
+   MONGO_URI=your_mongodb_uri
+
+4. Start the server:
+   npm start
+
+## Project Structure
+
+intern-career/
+├── controllers/
+│ ├── authController.js
+│ └── resourceController.js
+├── data/
+│ └── resources.json
+├── models/
+│ └── user.js
+├── routes/
+│ ├── authRoutes.js
+│ └── resourceRoutes.js
+├── middleware/
+│ ├── authMiddleware.js
+│ └── roleMiddleware.js
+├── app.js
+├── .env
+└── package.json
+
+## API Endpoints
+
+### Authentication and Authorization
+
+#### Register a User
+
+- **Endpoint:** `POST /api/auth/register`
+- **Request Body:**
+  {
+  "username": "testuser",
+  "password": "password123",
+  "role": "user"
+  }
+
+- **Response:**
+  {
+  "token": "your_jwt_token"
+  }
+
+#### Login a User
+
+- **Endpoint:** `POST /api/auth/login`
+- **Request Body:**
+  {
+  "username": "testuser",
+  "password": "password123"
+  }
+- **Response:**
+  {
+  "token": "your_jwt_token"
+  }
+
+### CRUD Operations on Resources
+
+#### Fetch All Resources
+
+- **Endpoint:** `GET /api/resources`
+- **Description:** Retrieve all resources.
+- **Authorization:** Requires Bearer token
+- **Response:**
+  [
+  {
+  "id": "e742c3c6-688a-49b5-a6a9-16edb8f5f7ed",
+  "name": "Resource Update",
+  "description": "Description of Resource Update"
+  },
+  {
+  "id": "ff015a9b-3d3f-4f65-b1c1-4f5ee8f026f7",
+  "name": "Resource 2",
+  "description": "Description of Resource 2"
+  },
+  {
+  "id": "7d2b1bc0-0166-4c82-803d-792c635ad8f4",
+  "name": "Resource 3",
+  "description": "Description of Resource 3"
+  }
+  ]
+
+#### Fetch a Specific Resource by ID
+
+- **Endpoint:** `GET /api/resources/:id`
+- **Description:** Retrieve a specific resource by ID.
+- **Authorization:** Requires Bearer token
+- **Response:**
+  {
+  "id": "e742c3c6-688a-49b5-a6a9-16edb8f5f7ed",
+  "name": "Resource Update",
+  "description": "Description of Resource Update"
+  }
+
+#### Add a New Resource
+
+- **Endpoint:** `POST /api/resources`
+- **Description:** Add a new resource.
+- **Authorization:** Requires Bearer token and 'admin' role
+- **Request Body:**
+  {
+  "name": "Resource 4",
+  "description": "Description of Resource 3"
+  }
+
+- **Response:**
+  {
+  "id": "e742c3c6-688a-49b5-a6a9-16edb8f5f7ed",
+  "name": "Resource 4",
+  "description": "Description of Resource 4"
+  }
+
+## Update an Existing Resource
+
+- **Endpoint:** `PUT /api/resources/:id`
+- **Description:** Update an existing resource.
+- **Authorization:** Requires Bearer token and 'admin' role
+- **Request Body:**
+  {
+  "name": "Updated Resource",
+  "description": "Updated Description"
+  }
+  \*Response:\*\*
+  {
+  "id": "e742c3c6-688a-49b5-a6a9-16edb8f5f7ed",
+  "name": "Resource Update",
+  "description": "Description of Resource Update"
+  }
+
+## Delete a Resource
+
+- **Endpoint:** `DELETE /api/resources/:id`
+- **Description:** Delete a resource.
+- **Authorization:** Requires Bearer token and 'admin' role
+- **Response:**
+  {
+  "id": "e742c3c6-688a-49b5-a6a9-16edb8f5f7ed",
+  "name": "Resource 4",
+  "description": "Description of Resource 4"
+  }
+  Data Validation and Error Handling
+
+- The API uses the Joi library for validating request data for creating and updating resources.
+- Appropriate HTTP status codes are used for success and error responses:
+  - `200 OK` for successful GET, PUT, DELETE requests.
+  - `201 Created` for successful POST requests.
+  - `400 Bad Request` for validation errors.
+  - `401 Unauthorized` for missing or invalid tokens.
+  - `403 Forbidden` for access denied due to insufficient permissions.
+  - `404 Not Found` for requests with non-existent resource IDs.
+
+## Testing the API
+
+Use tools like Postman or curl to test the API endpoints.
+
+### Example with curl
+
+- **Fetch all resources:**
+
+  curl -X GET http://localhost:3000/api/resources -H "Authorization: Bearer your_jwt_token"
+  **Fetch a specific resource:**
+
+  curl -X GET http://localhost:3000/api/resources/1 -H "Authorization: Bearer your_jwt_token"
+  **Add a new resource:**
+
+  curl -X POST http://localhost:3000/api/resources -H "Authorization: Bearer your_jwt_token" -H "Content-Type: application/json" -d '{"name":"Resource 3", "description":"Description of Resource 3"}'
+
+- **Update a resource:**
+
+  curl -X PUT http://localhost:3000/api/resources/1 -H "Authorization: Bearer your_jwt_token" -H "Content-Type: application/json" -d '{"name":"Updated Resource", "description":"Updated Description"}'
+
+- **Delete a resource:**
+  curl -X DELETE http://localhost:3000/api/resources/1 -H "Authorization: Bearer your_jwt_token"
+
+## Conclusion
+
+This project demonstrates how to create a RESTful API using Node.js and Express to perform CRUD operations. The API is secured with JWT-based authentication and authorization, validating user credentials and restricting access to certain endpoints based on user roles.

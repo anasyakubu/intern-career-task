@@ -1,0 +1,17 @@
+[
+  {
+    "id": "e742c3c6-688a-49b5-a6a9-16edb8f5f7ed",
+    "name": "Resource Update",
+    "description": "Description of Resource Update"
+  },
+  {
+    "id": "ff015a9b-3d3f-4f65-b1c1-4f5ee8f026f7",
+    "name": "Resource 2",
+    "description": "Description of Resource 2"
+  },
+  {
+    "id": "7d2b1bc0-0166-4c82-803d-792c635ad8f4",
+    "name": "Resource 3",
+    "description": "Description of Resource 3"
+  }
+]
